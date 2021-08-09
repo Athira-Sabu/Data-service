@@ -9,28 +9,24 @@ import org.apache.commons.csv.CSVRecord;
 import org.springframework.core.io.ClassPathResource;
 import org.springframework.stereotype.Component;
 
-import java.io.File;
-import java.io.FileReader;
-import java.io.IOException;
-import java.io.Reader;
+import java.io.*;
+import java.nio.charset.Charset;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
+
 @Component
 public class CSVHelper {
 
     public static List<InfectionDetails> getInfectionDetails() {
         try{
-        ClassPathResource res = new ClassPathResource("covid_19_india.csv");
-        File file = res.getFile();
-
-             Reader in = new FileReader(file);
+            InputStream in = new ClassPathResource("covid_19_india.csv").getInputStream();
             List<InfectionDetails> infectionDetailsList;
             Iterable<CSVRecord> csvRecords;
-            try (CSVParser csvParser = new CSVParser(in,
+            try (CSVParser csvParser = CSVParser.parse(in, Charset.defaultCharset(),
                     CSVFormat.DEFAULT.withFirstRecordAsHeader()
                             .withIgnoreHeaderCase().withTrim())) {
 
