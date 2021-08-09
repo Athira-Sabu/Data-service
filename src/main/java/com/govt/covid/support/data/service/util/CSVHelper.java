@@ -8,9 +8,11 @@ import org.apache.commons.csv.CSVParser;
 import org.apache.commons.csv.CSVRecord;
 import org.springframework.core.io.ClassPathResource;
 import org.springframework.stereotype.Component;
-import org.springframework.util.ResourceUtils;
 
-import java.io.*;
+import java.io.File;
+import java.io.FileReader;
+import java.io.IOException;
+import java.io.Reader;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -19,21 +21,23 @@ import java.util.List;
 
 @Component
 public class CSVHelper {
-    public static String TYPE = "text/csv";
-    static String[] HEADERS_INFECTED_DETAILS = { "Sno", "Date", "Time",
-            "State/UnionTerritory","ConfirmedIndianNational",
-            "ConfirmedForeignNational","Cured", "Deaths","Confirmed" };
-
 
     public static List<InfectionDetails> getInfectionDetails() {
-        try (Reader in = new FileReader(ResourceUtils.getFile("classpath:covid_19_india.csv"));
-             CSVParser csvParser = new CSVParser(in,
-                     CSVFormat.DEFAULT.withFirstRecordAsHeader()
-                             .withIgnoreHeaderCase().withTrim());) {
+        try{
+        ClassPathResource res = new ClassPathResource("covid_19_india.csv");
+        File file = res.getFile();
 
-            List<InfectionDetails> infectionDetailsList = new ArrayList<InfectionDetails>();
+             Reader in = new FileReader(file);
+            List<InfectionDetails> infectionDetailsList;
+            Iterable<CSVRecord> csvRecords;
+            try (CSVParser csvParser = new CSVParser(in,
+                    CSVFormat.DEFAULT.withFirstRecordAsHeader()
+                            .withIgnoreHeaderCase().withTrim())) {
 
-            Iterable<CSVRecord> csvRecords = csvParser.getRecords();
+                infectionDetailsList = new ArrayList<InfectionDetails>();
+
+                csvRecords = csvParser.getRecords();
+            }
 
             for (CSVRecord csvRecord : csvRecords) {
                 System.out.println(csvRecord.toString());
@@ -54,15 +58,21 @@ public class CSVHelper {
     }
 
     public static List<TestingDetails> getTestDetails() {
+        try{
+            ClassPathResource res = new ClassPathResource("statelist.csv");
+            File file = res.getFile();
+            Reader in = new FileReader(file);
 
-        try (Reader in = new FileReader(ResourceUtils.getFile("classpath:statelist.csv"));
-             CSVParser csvParser = new CSVParser(in,
-                     CSVFormat.DEFAULT.withFirstRecordAsHeader()
-                             .withIgnoreHeaderCase().withTrim())) {
+            List<TestingDetails> testingDetailsList;
+            Iterable<CSVRecord> csvRecords;
+            try (CSVParser csvParser = new CSVParser(in,
+                    CSVFormat.DEFAULT.withFirstRecordAsHeader()
+                            .withIgnoreHeaderCase().withTrim())) {
 
-            List<TestingDetails> testingDetailsList = new ArrayList<TestingDetails>();
+                testingDetailsList = new ArrayList<TestingDetails>();
 
-            Iterable<CSVRecord> csvRecords = csvParser.getRecords();
+                csvRecords = csvParser.getRecords();
+            }
 
             for (CSVRecord csvRecord : csvRecords) {
                 System.out.println(csvRecord.toString());
@@ -82,15 +92,21 @@ public class CSVHelper {
     }
 
     public static List<VaccineDetails> getVaccineDetails() {
+        try{
+            ClassPathResource res = new ClassPathResource("list.csv");
+            File file = res.getFile();
+            Reader in = new FileReader(file);
 
-        try (Reader in = new FileReader(ResourceUtils.getFile("classpath:list.csv"));
-             CSVParser csvParser = new CSVParser(in,
-                     CSVFormat.DEFAULT.withFirstRecordAsHeader()
-                             .withIgnoreHeaderCase().withTrim());) {
+            List<VaccineDetails> vaccineDetailsList;
+            Iterable<CSVRecord> csvRecords;
+            try (CSVParser csvParser = new CSVParser(in,
+                    CSVFormat.DEFAULT.withFirstRecordAsHeader()
+                            .withIgnoreHeaderCase().withTrim())) {
 
-            List<VaccineDetails> vaccineDetailsList = new ArrayList<VaccineDetails>();
+                vaccineDetailsList = new ArrayList<VaccineDetails>();
 
-            Iterable<CSVRecord> csvRecords = csvParser.getRecords();
+                csvRecords = csvParser.getRecords();
+            }
 
             for (CSVRecord csvRecord : csvRecords) {
                 System.out.println(csvRecord.toString());
