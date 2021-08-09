@@ -36,7 +36,6 @@ public class CSVHelper {
             }
 
             for (CSVRecord csvRecord : csvRecords) {
-                System.out.println(csvRecord.toString());
                 InfectionDetails infectionDetails = new InfectionDetails(
                   Integer.parseInt(csvRecord.get(0)), dateConverter(csvRecord.get(1)),
                         csvRecord.get(2),
@@ -71,7 +70,6 @@ public class CSVHelper {
             }
 
             for (CSVRecord csvRecord : csvRecords) {
-                System.out.println(csvRecord.toString());
                  TestingDetails infectionDetails = new TestingDetails(
                         dateConverter(csvRecord.get(0)),
                         csvRecord.get(1),
@@ -105,7 +103,6 @@ public class CSVHelper {
             }
 
             for (CSVRecord csvRecord : csvRecords) {
-                System.out.println(csvRecord.toString());
                 VaccineDetails vaccineDetails = new VaccineDetails(
                         dateConverterWith(csvRecord.get(0)),
                         csvRecord.get(1),
