@@ -54,13 +54,11 @@ public class CSVHelper {
 
     public static List<TestingDetails> getTestDetails() {
         try{
-            ClassPathResource res = new ClassPathResource("statelist.csv");
-            File file = res.getFile();
-            Reader in = new FileReader(file);
 
+            InputStream in = new ClassPathResource("statelist.csv").getInputStream();
             List<TestingDetails> testingDetailsList;
             Iterable<CSVRecord> csvRecords;
-            try (CSVParser csvParser = new CSVParser(in,
+            try (CSVParser csvParser = CSVParser.parse(in, Charset.defaultCharset(),
                     CSVFormat.DEFAULT.withFirstRecordAsHeader()
                             .withIgnoreHeaderCase().withTrim())) {
 
@@ -87,13 +85,10 @@ public class CSVHelper {
 
     public static List<VaccineDetails> getVaccineDetails() {
         try{
-            ClassPathResource res = new ClassPathResource("list.csv");
-            File file = res.getFile();
-            Reader in = new FileReader(file);
-
+            InputStream in = new ClassPathResource("list.csv").getInputStream();
             List<VaccineDetails> vaccineDetailsList;
             Iterable<CSVRecord> csvRecords;
-            try (CSVParser csvParser = new CSVParser(in,
+            try (CSVParser csvParser = CSVParser.parse(in, Charset.defaultCharset(),
                     CSVFormat.DEFAULT.withFirstRecordAsHeader()
                             .withIgnoreHeaderCase().withTrim())) {
 
